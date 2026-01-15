@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="SampleService"
+             targetNamespace="http://xmlns.oracle.com/AIA/SampleService"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://xmlns.oracle.com/AIA/SampleService"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    
+    <types>
+        <xs:schema targetNamespace="http://xmlns.oracle.com/AIA/SampleService">
+            <xs:element name="ProcessRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="requestId" type="xs:string"/>
+                        <xs:element name="payload" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            
+            <xs:element name="ProcessResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="responseId" type="xs:string"/>
+                        <xs:element name="status" type="xs:string"/>
+                        <xs:element name="message" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </types>
+    
+    <message name="ProcessRequestMessage">
+        <part name="payload" element="tns:ProcessRequest"/>
+    </message>
+    
+    <message name="ProcessResponseMessage">
+        <part name="payload" element="tns:ProcessResponse"/>
+    </message>
+    
+    <portType name="SampleServicePort">
+        <operation name="process">
+            <input message="tns:ProcessRequestMessage"/>
+            <output message="tns:ProcessResponseMessage"/>
+        </operation>
+    </portType>
+    
+    <binding name="SampleServiceBinding" type="tns:SampleServicePort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="process">
+            <soap:operation soapAction="process"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    
+    <service name="SampleService">
+        <port name="SampleServicePort" binding="tns:SampleServiceBinding">
+            <soap:address location="http://localhost:8001/soa-infra/services/default/SampleService"/>
+        </port>
+    </service>
+    
+</definitions>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://xmlns.oracle.com/AIA/Schema/Common"
+           xmlns:tns="http://xmlns.oracle.com/AIA/Schema/Common"
+           elementFormDefault="qualified">
+    
+    <!-- Common Header Type -->
+    <xs:complexType name="HeaderType">
+        <xs:sequence>
+            <xs:element name="messageId" type="xs:string" minOccurs="1"/>
+            <xs:element name="timestamp" type="xs:dateTime" minOccurs="1"/>
+            <xs:element name="sourceSystem" type="xs:string" minOccurs="1"/>
+            <xs:element name="targetSystem" type="xs:string" minOccurs="1"/>
+            <xs:element name="userId" type="xs:string" minOccurs="0"/>
+            <xs:element name="correlationId" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Common Status Type -->
+    <xs:simpleType name="StatusType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SUCCESS"/>
+            <xs:enumeration value="ERROR"/>
+            <xs:enumeration value="WARNING"/>
+            <xs:enumeration value="PENDING"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Common Error Type -->
+    <xs:complexType name="ErrorType">
+        <xs:sequence>
+            <xs:element name="errorCode" type="xs:string" minOccurs="1"/>
+            <xs:element name="errorMessage" type="xs:string" minOccurs="1"/>
+            <xs:element name="errorDetails" type="xs:string" minOccurs="0"/>
+            <xs:element name="errorSource" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Common Request Type -->
+    <xs:complexType name="BaseRequestType">
+        <xs:sequence>
+            <xs:element name="header" type="tns:HeaderType" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Common Response Type -->
+    <xs:complexType name="BaseResponseType">
+        <xs:sequence>
+            <xs:element name="header" type="tns:HeaderType" minOccurs="1"/>
+            <xs:element name="status" type="tns:StatusType" minOccurs="1"/>
+            <xs:element name="errors" type="tns:ErrorType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+</xs:schema>

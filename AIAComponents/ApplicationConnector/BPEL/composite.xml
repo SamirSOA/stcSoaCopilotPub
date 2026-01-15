@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite name="SampleAIAComposite"
+           revision="1.0"
+           label="2026-01-15"
+           mode="active"
+           state="on"
+           xmlns="http://xmlns.oracle.com/sca/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+           xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy">
+    
+    <import namespace="http://schemas.oracle.com/bpel/extension" 
+            location="RuntimeFault.wsdl" 
+            importType="http://schemas.xmlsoap.org/wsdl/"/>
+    
+    <!-- Service Definition -->
+    <service name="SampleService">
+        <interface.wsdl interface="http://xmlns.oracle.com/AIA/SampleService#wsdl.interface(SampleServicePort)"/>
+        <binding.ws port="http://xmlns.oracle.com/AIA/SampleService#wsdl.endpoint(SampleService/SampleServicePort)"/>
+    </service>
+    
+    <!-- Component Definition -->
+    <component name="SampleBPELProcess">
+        <implementation.bpel src="SampleBPELProcess.bpel"/>
+    </component>
+    
+    <!-- Wire Definition -->
+    <wire>
+        <source.uri>SampleService</source.uri>
+        <target.uri>SampleBPELProcess/SampleServicePort</target.uri>
+    </wire>
+    
+</composite>
