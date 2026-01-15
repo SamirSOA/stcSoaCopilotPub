@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process name="SampleBPELProcess"
+         targetNamespace="http://xmlns.oracle.com/AIA/BPEL/SampleBPELProcess"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/AIA/SampleService"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/AIA/Schema/Common">
+
+    <import namespace="http://xmlns.oracle.com/AIA/SampleService" 
+            location="../../../Infrastructure/WSDL/SampleService.wsdl" 
+            importType="http://schemas.xmlsoap.org/wsdl/"/>
+
+    <!-- Partner Links -->
+    <partnerLinks>
+        <partnerLink name="SampleService" 
+                     partnerLinkType="client:SampleServicePLT" 
+                     myRole="SampleServiceProvider"/>
+    </partnerLinks>
+
+    <!-- Variables -->
+    <variables>
+        <variable name="inputVariable" messageType="client:ProcessRequestMessage"/>
+        <variable name="outputVariable" messageType="client:ProcessResponseMessage"/>
+    </variables>
+
+    <!-- BPEL Process Flow -->
+    <sequence name="main">
+        
+        <!-- Receive Request -->
+        <receive name="receiveInput" 
+                 partnerLink="SampleService"
+                 portType="client:SampleServicePort" 
+                 operation="process" 
+                 variable="inputVariable"
+                 createInstance="yes"/>
+
+        <!-- Assign Initial Values -->
+        <assign name="AssignResponse">
+            <copy>
+                <from>
+                    <literal>
+                        <client:ProcessResponse>
+                            <responseId></responseId>
+                            <status>SUCCESS</status>
+                            <message>Request processed successfully</message>
+                        </client:ProcessResponse>
+                    </literal>
+                </from>
+                <to variable="outputVariable" part="payload"/>
+            </copy>
+            <copy>
+                <from>$inputVariable.payload/client:requestId</from>
+                <to>$outputVariable.payload/client:responseId</to>
+            </copy>
+        </assign>
+
+        <!-- Reply with Response -->
+        <reply name="replyOutput" 
+               partnerLink="SampleService"
+               portType="client:SampleServicePort" 
+               operation="process" 
+               variable="outputVariable"/>
+
+    </sequence>
+</process>

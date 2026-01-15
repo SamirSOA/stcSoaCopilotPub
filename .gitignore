@@ -1,0 +1,48 @@
+# Build artifacts
+build/
+dist/
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.sar
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.metadata/
+
+# JDeveloper specific
+.data/
+*.jws
+deploy/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+.DS_Store
+
+# SOA specific
+.adf/
+classes/
+
+# Maven
+dependency-reduced-pom.xml
+
+# Credentials (never commit)
+*password*
+*credential*
+*.jks
+*.p12

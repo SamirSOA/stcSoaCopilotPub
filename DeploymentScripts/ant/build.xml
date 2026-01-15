@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AIA-Deployment" default="deploy" basedir="../..">
+    
+    <description>Oracle AIA Deployment Build Script</description>
+    
+    <!-- Property Files -->
+    <property file="build.properties"/>
+    <property environment="env"/>
+    
+    <!-- Oracle Home and Middleware -->
+    <property name="oracle.home" value="${env.ORACLE_HOME}"/>
+    <property name="mw.home" value="${env.MW_HOME}"/>
+    <property name="soa.home" value="${oracle.home}/soa"/>
+    
+    <!-- AIA Directories -->
+    <property name="aia.home" value="${basedir}"/>
+    <property name="aia.components" value="${aia.home}/AIAComponents"/>
+    <property name="aia.metadata" value="${aia.home}/AIAMetaData"/>
+    <property name="infrastructure" value="${aia.home}/Infrastructure"/>
+    
+    <!-- Target Server Properties -->
+    <property name="server.host" value="localhost"/>
+    <property name="server.port" value="8001"/>
+    <property name="server.user" value="weblogic"/>
+    
+    <!-- Deployment Targets -->
+    <target name="init" description="Initialize build environment">
+        <echo message="Initializing AIA build environment..."/>
+        <echo message="Oracle Home: ${oracle.home}"/>
+        <echo message="AIA Home: ${aia.home}"/>
+        <mkdir dir="${basedir}/build"/>
+        <mkdir dir="${basedir}/dist"/>
+    </target>
+    
+    <target name="clean" description="Clean build artifacts">
+        <echo message="Cleaning build artifacts..."/>
+        <delete dir="${basedir}/build"/>
+        <delete dir="${basedir}/dist"/>
+    </target>
+    
+    <target name="compile" depends="init" description="Compile AIA components">
+        <echo message="Compiling AIA components..."/>
+        <!-- Add compilation tasks here -->
+    </target>
+    
+    <target name="package" depends="compile" description="Package AIA composites">
+        <echo message="Packaging AIA composites..."/>
+        <!-- Package SOA composites into SAR/JAR files -->
+    </target>
+    
+    <target name="deploy" depends="package" description="Deploy to SOA server">
+        <echo message="Deploying to SOA Server at ${server.host}:${server.port}"/>
+        <!-- Add deployment tasks using ant-sca-deploy.xml -->
+    </target>
+    
+    <target name="undeploy" description="Undeploy from SOA server">
+        <echo message="Undeploying from SOA Server..."/>
+        <!-- Add undeployment tasks -->
+    </target>
+    
+    <target name="test" description="Run AIA tests">
+        <echo message="Running AIA tests..."/>
+        <!-- Add test execution tasks -->
+    </target>
+    
+</project>

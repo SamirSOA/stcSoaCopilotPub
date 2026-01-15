@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>com.stc.soa.aia</groupId>
+    <artifactId>stc-aia-workspace</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    
+    <name>STC SOA AIA Workspace</name>
+    <description>Oracle Application Integration Architecture Workspace for STC SOA</description>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <oracle.soa.version>12.2.1</oracle.soa.version>
+        <aia.version>11.1.1.7.0</aia.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    
+    <modules>
+        <!-- Add SOA composite modules here -->
+    </modules>
+    
+    <dependencies>
+        <!-- Oracle SOA Dependencies -->
+        <dependency>
+            <groupId>com.oracle.soa</groupId>
+            <artifactId>fabric-runtime</artifactId>
+            <version>${oracle.soa.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.oracle.bpel</groupId>
+            <artifactId>bpel-runtime</artifactId>
+            <version>${oracle.soa.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <!-- Oracle SOA Maven Plugin -->
+            <plugin>
+                <groupId>com.oracle.soa.plugin</groupId>
+                <artifactId>oracle-soa-plugin</artifactId>
+                <version>${oracle.soa.version}</version>
+                <configuration>
+                    <serverUrl>http://localhost:8001</serverUrl>
+                    <user>weblogic</user>
+                    <overwrite>true</overwrite>
+                    <partition>default</partition>
+                </configuration>
+            </plugin>
+            
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <repositories>
+        <repository>
+            <id>oracle-maven-repo</id>
+            <name>Oracle Maven Repository</name>
+            <url>https://maven.oracle.com</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    
+</project>
